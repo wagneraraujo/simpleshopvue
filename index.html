@@ -10,11 +10,28 @@
 </head>
 <body>
 <div id="app">
-  <div class="modal">
+  <div v-if="produto" class="modal">
+    <div class="container-modal">
 
-    {{produto}}
-
-  </div>
+    <div @click="produto = false"class="close">X</div>
+    <div class="nomeproduto text-2xl">{{produto.nome}}</div>
+    <div class="precoProduto">{{produto.preco |numeroPreco}}</div>
+    <div class="descricao base">{{produto.descricao}}</div>
+    <div><button class="bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Add ao carrinho
+    </button>
+    </div>
+<div class="avaliacoes">
+  <h2>Avaliações</h2>
+      <ul>
+        <li v-for="avaliacao in produto.reviews">
+          <p>{{avaliacao.descricao}}</p>
+          <small>{{avaliacao.nome}} | {{avaliacao.estrelas}}</small>
+        </li>
+      </ul>
+    </div>
+</div>
+</div>
 
 
   <div class="container mx-auto px-3">
