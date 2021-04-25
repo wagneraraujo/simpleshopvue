@@ -10,16 +10,33 @@
 </head>
 <body>
 <div id="app">
+  <header class="bg-gray-300	py-6 mb-8">
+    <div class="container mx-auto">
+        <div class="content-header grid grid-cols-2 gap-3">
+  <div class="logo"><h2 class="text-3xl">Shop Estudo Vue</h2></div>
+  <div class="carrinho flex justify-end">cart: {{carrinhoTotal | numeroPreco}} QTD: {{carrinho.length}}</div>
+  <ul>
+    <li v-for="(item, index) in carrinho">
+      <p>{{item.nome}}</p>
+      <button @click="removerItem(index)">X</button>
+    </li>
+  </ul>
+        </div>
+    </div>
+  </header>
   <div v-if="produto" class="modal">
     <div class="container-modal">
-
-    <div @click="produto = false"class="close">X</div>
+    <div class="close" @click="produto = false">x</div>
     <div class="nomeproduto text-2xl">{{produto.nome}}</div>
     <div class="precoProduto">{{produto.preco |numeroPreco}}</div>
     <div class="descricao base">{{produto.descricao}}</div>
-    <div><button class="bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <small>Estoque:{{produto.estoque}}</small>
+    <div>
+      <button v-if="produto.estoque > 0" @click="adicionarItem" class="bg-blue-500 mt-3 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       Add ao carrinho
     </button>
+      <button v-else disabled class="bg-gray-500 mt-3 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Produto esgotado</button>
+
     </div>
 <div class="avaliacoes">
   <h2>Avaliações</h2>
@@ -36,10 +53,11 @@
 
   <div class="container mx-auto px-3">
   <div class="listprodutos grid grid-cols-3 gap-4">
-    <div v-for="produto in produtos" @click="detalheProduto(produto.id)" :key="produto.id" class="produto mb-6">
-      <img :src="produto.img" :alt="produto.nome">
+    <div v-for="produto in produtos"  :key="produto.id" class="produto mb-6">
+      <img :src="produto.img" :alt="produto.nome"@click="detalheProduto(produto.id)">
       <div><span class="preco">{{produto.preco | numeroPreco}}</span></div>
       <h3 class="text-2xl">{{produto.nome}}</h3>
+      <button class="bg-blue-300 mt-4 hover:bg-blue-700 text-white px-4" >add carrinho</button>
     </div>
   </div>
   </div>
